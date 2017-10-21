@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-'''Market - ETrade Market API 
+'''Market - ETrade Market API
    TODO:
     * Get Option Chains
     * Get Option Expire Dates
@@ -101,6 +101,61 @@ class ETradeMarket(object):
             return req.json()
         else:
             return req.text
+
+    def get_option_chain(self,  expiration_month, expiration_year, underlier,
+                            chain_type ='CALL', keep_skip_adjusted = True,
+                            dev=True, resp_format='json'):
+        '''get_option_chain(dev, resp_format, **kwargs) -> resp
+           param: dev
+           type: bool
+           description: API enviornment dev vs. real
+           param: resp_format
+           type: str
+           description: Response format JSON or None = XML
+           param: chain_type
+           type: string
+           description: What type of chain to pull - CALL, PUT, CALLPUT (both)
+           param: expiration_month
+           type: integer
+           description: month of expiration for option
+           param: expiration_year
+           type: integer
+           description: the year the option expires
+           param: unlerlier
+           type: string
+           description: base symbol option is derived from
+           param: keep_skip_adjusted
+           type: bool
+           required: optional
+           description: keep the adjusted options
+            ...'''
+        #do some param checking and throw an exception if incorrect..
+
+        # Set Env join symbles with .join(args)
+        if dev:
+            uri = r'market/sandbox/rest/optionchains'
+            api_url = '%s/%s.%s' % (self.base_url_dev, uri, resp_format)
+        else:
+            uri = r'market/rest/optionchains'
+            api_url = '%s/%s.%s' % (self.base_url_prod, uri, resp_format)
+        logger.debug(api_url)
+        #add detail flag to url
+        payload = {'chainType':  chain_type,
+                    'expirationMonth': expiration_month,
+                    'expirationYear': expiration_year,
+                    'underlier': underlier,
+                    'skipAdjusted': keep_skip_adjusted
+                    }
+        req = self.session.get(api_url, params=payload)
+        req.raise_for_status()
+        logger.debug(req.text)
+
+        if resp_format is 'json':
+            return req.json()
+        else:
+            return req.text
+
+
 
     def get_quote(self, *args, dev=True, resp_format='json', detail_flag='ALL'):
         '''get_quote(dev, resp_format, **kwargs) -> resp
