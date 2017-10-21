@@ -3,7 +3,7 @@ init:
 devel:
 	pip3 install -r requirements_dev.txt
 test:
-	#python3 -m unittest -v
+	python3 -m unittest -v
 	coverage run --source pyetrade -m unittest -v
 	coverage report -m
 lint:
