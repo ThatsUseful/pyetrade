@@ -160,7 +160,7 @@ class ETradeMarket(object):
             or not type ( dev ) == bool ):
             raise OptionChainBadBoolParamException
         #rest_format should be ".json" or empty..
-        if not ( resp_format == "" or resp_format == "json"):
+        if not ( resp_format == "xml" or resp_format == "json"):
             raise OptionChainBadRespStringException
 
         # Set Env join symbles with .join(args)

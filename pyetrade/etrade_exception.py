@@ -46,11 +46,11 @@ class OptionChainBadBoolParamException(Exception):
 
     def __str__(self):
         return 'dev and keep_skip_adjusted must be of type bool'
-    
+
 class OptionChainBadRespStringException(Exception):
     def __init__(self, explanation=None, params=None):
         self.required = params
         self.args = (explanation, params, )
 
     def __str__(self):
-        return 'resp_format should be blank or \'json\''
+        return 'resp_format should be \'xml\' or \'json\''
