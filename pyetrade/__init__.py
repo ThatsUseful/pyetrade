@@ -12,5 +12,6 @@ from . import accounts
 from .accounts import ETradeAccounts
 from . import market
 from .market import ETradeMarket
+from .market import OptionType
 from . import order
 from .order import ETradeOrder

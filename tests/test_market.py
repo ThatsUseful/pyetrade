@@ -87,4 +87,3 @@ class TestETradeMarket(unittest.TestCase):
         # Test exception class
         with self.assertRaises(etrade_exception.MarketQuoteException):
             mark.get_quote(*sym)
-        

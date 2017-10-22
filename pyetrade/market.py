@@ -8,10 +8,23 @@
     * Get Quote - Doc String'''
 
 import logging
+from enum import Enum, unique
 from requests_oauthlib import OAuth1Session
-from pyetrade.etrade_exception import MarketQuoteException
+from pyetrade.etrade_exception import MarketQuoteException, \
+    OptionChainBadMonthException, OptionChainBadYearException, \
+    OptionChainBadOptionTypeException, OptionChainBadBoolParamException, \
+    OptionChainBadRespStringException
+
+
 # Set up logging
 logger = logging.getLogger(__name__)
+
+#helper class for enumberated type OptionType
+@unique
+class OptionType( Enum ):
+            CALL = 1
+            PUT = 2
+            BOTH = 3
 
 class ETradeMarket(object):
     '''ETradeMarket'''
@@ -42,6 +55,8 @@ class ETradeMarket(object):
                                      self.resource_owner_secret,
                                      signature_type='AUTH_HEADER')
 
+        self.o_type = {OptionType.CALL: "CALL", OptionType.PUT: "PUT",
+                        OptionType.BOTH: "CALLPUT"}
     def look_up_product(self, company, s_type,
                         dev=True, resp_format='json'):
         '''look_up_product() -> resp
@@ -130,6 +145,23 @@ class ETradeMarket(object):
            description: keep the adjusted options
             ...'''
         #do some param checking and throw an exception if incorrect..
+        #expiration month needs to be 1-12
+        if not( type(expiration_month) == int) \
+            or ( expiration_month < 1 or expiration_month > 12):
+            raise OptionChainBadMonthException
+        #expiration year should really be the current year, or no more than +3
+        if not( type( expiration_year) == int) or expiration_year< 2017:
+            raise OptionChainBadYearException
+        #chain_type should be an enum of type OptionType
+        if( not type(chain_type) == OptionType):
+            raise OptionChainBadOptionTypeException
+        #keep_skip_adjusted and dev should be bools
+        if( not type( keep_skip_adjusted) == bool \
+            or not type ( dev ) == bool ):
+            raise OptionChainBadBoolParamException
+        #rest_format should be ".json" or empty..
+        if not ( resp_format == "" or resp_format == "json"):
+            raise OptionChainBadRespStringException
 
         # Set Env join symbles with .join(args)
         if dev:
@@ -140,7 +172,7 @@ class ETradeMarket(object):
             api_url = '%s/%s.%s' % (self.base_url_prod, uri, resp_format)
         logger.debug(api_url)
         #add detail flag to url
-        payload = {'chainType':  chain_type,
+        payload = {'chainType':  self.o_type[chain_type],
                     'expirationMonth': expiration_month,
                     'expirationYear': expiration_year,
                     'underlier': underlier,
