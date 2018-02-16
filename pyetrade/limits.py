@@ -1,5 +1,6 @@
 '''Limits - ETrade Limits API'''
 import logging
+from requests_oauthlib import OAuth1Session
 
 # Set up logging
 logger = logging.getLogger(__name__)
