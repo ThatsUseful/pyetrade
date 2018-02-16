@@ -7,10 +7,10 @@ with open('requirements.txt') as requirements:
     req = [i.strip() for i in requirements]
 
 setup(name='pyetrade',
-      version='0.7.0',
+      version='0.8.0',
       description='eTrade API wrappers',
-      author='Jesse Cooper',
-      author_email='jesse_cooper@codeholics.com',
+      author='Jesse Cooper, Scott Rutherford',
+      author_email='jesse_cooper@codeholics.com, scott@thatsuseful.com',
       url='https://github.com/jessecooper/pyetrade',
       license='GPLv3',
       packages=['pyetrade'],
