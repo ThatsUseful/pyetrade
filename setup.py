@@ -6,7 +6,7 @@ from distutils.core import setup
 with open('requirements.txt') as requirements:
     req = [i.strip() for i in requirements]
 
-setup(name='pyetrade',
+setup(name='com.thatsuseful.pyetrade',
       version='0.8.0',
       description='eTrade API wrappers',
       author='Jesse Cooper',      
@@ -15,7 +15,7 @@ setup(name='pyetrade',
       maintainer_email='scott@thatsuseful.com',
       url='https://github.com/thatsuseful/pyetrade',
       license='GPLv3',
-      packages=['com.thatsuseful.pyetrade'],
+      packages=['pyetrade'],
       package_dir={'pyetrade':'pyetrade'},
       install_requires=req,
       platforms=['any'],
