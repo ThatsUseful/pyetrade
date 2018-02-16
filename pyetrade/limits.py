@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class EtradeLimits(object):
+class ETradeLimits(object):
   def get_limits(self, module, dev=True, resp_format='json'):
       '''get_limits(dev, resp_format, module) -> resp
          param: dev
