@@ -6,6 +6,35 @@ logger = logging.getLogger(__name__)
 
 
 class ETradeLimits(object):
+  '''ETradeLimits'''
+  def __init__(self, client_key, client_secret,
+               resource_owner_key, resource_owner_secret):
+      '''__init__(client_key, client_secret)
+         param: client_key
+         type: str
+         description: etrade client key
+         param: client_secret
+         type: str
+         description: etrade client secret
+         param: resource_owner_key
+         type: str
+         description: OAuth authentication token key
+         param: resource_owner_secret
+         type: str
+         description: OAuth authentication token secret'''
+      self.client_key = client_key
+      self.client_secret = client_secret
+      self.resource_owner_key = resource_owner_key
+      self.resource_owner_secret = resource_owner_secret
+      self.base_url_prod = r'https://etws.etrade.com'
+      self.base_url_dev = r'https://etwssandbox.etrade.com'
+      self.session = OAuth1Session(self.client_key,
+                                   self.client_secret,
+                                   self.resource_owner_key,
+                                   self.resource_owner_secret,
+                                   signature_type='AUTH_HEADER')
+
+
   def get_limits(self, module, dev=True, resp_format='json'):
       '''get_limits(dev, resp_format, module) -> resp
          param: dev
