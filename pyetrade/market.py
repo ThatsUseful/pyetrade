@@ -57,6 +57,8 @@ class ETradeMarket(object):
 
         self.o_type = {OptionType.CALL: "CALL", OptionType.PUT: "PUT",
                         OptionType.BOTH: "CALLPUT"}
+
+
     def look_up_product(self, company, s_type,
                         dev=True, resp_format='json'):
         '''look_up_product() -> resp
@@ -117,9 +119,42 @@ class ETradeMarket(object):
         else:
             return req.text
 
-    def get_option_chain(self,  expiration_month, expiration_year, underlier,
-                            chain_type ='CALL', keep_skip_adjusted = True,
-                            dev=True, resp_format='json'):
+
+    def get_option_expire_dates(self, underlier, dev=True, resp_format='json'):
+        '''get_option_expire_dates(dev, resp_format, underlier) -> resp
+           param: dev
+           type: bool
+           description: API enviornment dev vs. real
+           param: resp_format
+           type: str
+           description: Response format JSON or None = XML
+           param: unlerlier
+           type: string
+           description: base symbol option is derived from
+            ...'''
+        if dev:
+            uri = r'market/sandbox/rest/optionexpiredate'
+            api_url = '%s/%s.%s' % (self.base_url_dev, uri, resp_format)
+        else:
+            uri = r'market/rest/optionexpiredate'
+            api_url = '%s/%s.%s' % (self.base_url_prod, uri, resp_format)
+
+
+        #add detail flag to url
+        payload = {'underlier': underlier}
+        req = self.session.get(api_url, params=payload)
+        req.raise_for_status()
+        logger.debug(req.text)
+
+        if resp_format is 'json':
+            return req.json()
+        else:
+            return req.text
+
+
+    def get_option_chain(self, expiration_month, expiration_year, underlier,
+                        chain_type ='CALL', keep_skip_adjusted = True,
+                        dev=True, resp_format='json'):
         '''get_option_chain(dev, resp_format, **kwargs) -> resp
            param: dev
            type: bool
@@ -186,7 +221,6 @@ class ETradeMarket(object):
             return req.json()
         else:
             return req.text
-
 
 
     def get_quote(self, *args, dev=True, resp_format='json', detail_flag='ALL'):
