@@ -2,9 +2,6 @@
 
 '''Market - ETrade Market API
    TODO:
-    * Get Option Chains
-    * Get Option Expire Dates
-    * Look Up Product
     * Get Quote - Doc String'''
 
 import logging
