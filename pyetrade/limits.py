@@ -1,6 +1,6 @@
 '''Limits - ETrade Limits API'''
 import logging
-from requests
+import requests
 
 # Set up logging
 logger = logging.getLogger(__name__)
