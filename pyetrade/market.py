@@ -22,7 +22,7 @@ class ETradeOptionType( Enum ):
     CALL = 1
     PUT = 2
     BOTH = 3
-    
+
 
 class ETradeMarket(object):
     '''ETradeMarket'''
@@ -211,13 +211,15 @@ class ETradeMarket(object):
             uri = r'market/rest/optionchains'
             api_url = '%s/%s.%s' % (self.base_url_prod, uri, resp_format)
         logger.debug(api_url)
+        
         #add detail flag to url
-        payload = {'chainType':  self.o_type[chain_type],
-                    'expirationMonth': expiration_month,
-                    'expirationYear': expiration_year,
-                    'underlier': underlier,
-                    'skipAdjusted': keep_skip_adjusted
-                    }
+        payload = {
+            'chainType':  self.o_type[chain_type],
+            'expirationMonth': f'{expiration_month:02}',
+            'expirationYear': expiration_year,
+            'underlier': underlier,
+            'skipAdjusted': keep_skip_adjusted
+        }
         req = self.session.get(api_url, params=payload)
         req.raise_for_status()
         logger.debug(req.text)
