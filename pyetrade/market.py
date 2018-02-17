@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 #helper class for enumberated type OptionType
 @unique
-class OptionType( Enum ):
+class EtradeOptionType( Enum ):
             CALL = 1
             PUT = 2
             BOTH = 3
@@ -194,7 +194,7 @@ class ETradeMarket(object):
         if( not type( keep_skip_adjusted) == bool \
             or not type ( dev ) == bool ):
             raise OptionChainBadBoolParamException
-            
+
         #rest_format should be ".json" or empty..
         if not ( resp_format == "xml" or resp_format == "json"):
             raise OptionChainBadRespStringException
