@@ -36,7 +36,7 @@ class ETradeLimits(object):
          description: one of MARKET, ACCOUNTS, ORDER
           ...'''
       if dev:
-          uri = r'statuses/sandbox/limits'
+          uri = r'statuses/sandbox/rest/limits'
           api_url = '%s/%s.%s' % (self.base_url_dev, uri, resp_format)
       else:
           uri = r'statuses/rest/limits'
