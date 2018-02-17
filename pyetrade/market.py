@@ -181,16 +181,20 @@ class ETradeMarket(object):
         if not( type(expiration_month) == int) \
             or ( expiration_month < 1 or expiration_month > 12):
             raise OptionChainBadMonthException
-        #expiration year should really be the current year, or no more than +3
-        if not( type( expiration_year) == int) or expiration_year< 2017:
+
+        #expiration year should be an int
+        if not( type( expiration_year) == int):
             raise OptionChainBadYearException
+
         #chain_type should be an enum of type OptionType
         if( not type(chain_type) == OptionType):
             raise OptionChainBadOptionTypeException
+
         #keep_skip_adjusted and dev should be bools
         if( not type( keep_skip_adjusted) == bool \
             or not type ( dev ) == bool ):
             raise OptionChainBadBoolParamException
+            
         #rest_format should be ".json" or empty..
         if not ( resp_format == "xml" or resp_format == "json"):
             raise OptionChainBadRespStringException
