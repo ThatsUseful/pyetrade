@@ -16,7 +16,7 @@ from pyetrade.etrade_exception import MarketQuoteException, \
 # Set up logging
 logger = logging.getLogger(__name__)
 
-#helper class for enumberated type OptionType
+#helper class for enumberated type ETradeOptionType
 @unique
 class ETradeOptionType( Enum ):
             CALL = 1
@@ -52,8 +52,11 @@ class ETradeMarket(object):
                                      self.resource_owner_secret,
                                      signature_type='AUTH_HEADER')
 
-        self.o_type = {OptionType.CALL: "CALL", OptionType.PUT: "PUT",
-                        OptionType.BOTH: "CALLPUT"}
+        self.o_type = {
+            ETradeOptionType.CALL: "CALL", 
+            ETradeOptionType.PUT: "PUT",
+            ETradeOptionType.BOTH: "CALLPUT"
+        }
 
 
     def look_up_product(self, company, s_type,
@@ -186,8 +189,8 @@ class ETradeMarket(object):
         if not( type( expiration_year) == int):
             raise OptionChainBadYearException
 
-        #chain_type should be an enum of type OptionType
-        if( not type(chain_type) == OptionType):
+        #chain_type should be an enum of type ETradeOptionType
+        if( not type(chain_type) == ETradeOptionType):
             raise OptionChainBadOptionTypeException
 
         #keep_skip_adjusted and dev should be bools

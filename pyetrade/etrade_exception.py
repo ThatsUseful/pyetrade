@@ -38,7 +38,7 @@ class OptionChainBadOptionTypeException(Exception):
         self.args = (explanation, params, )
 
     def __str__(self):
-        return 'Must be of enumerated type OptionType'
+        return 'Must be of enumerated type ETradeOptionType'
 class OptionChainBadBoolParamException(Exception):
     def __init__(self, explanation=None, params=None):
         self.required = params
