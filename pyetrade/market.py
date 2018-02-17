@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 #helper class for enumberated type OptionType
 @unique
-class EtradeOptionType( Enum ):
+class ETradeOptionType( Enum ):
             CALL = 1
             PUT = 2
             BOTH = 3
