@@ -211,11 +211,11 @@ class ETradeMarket(object):
             uri = r'market/rest/optionchains'
             api_url = '%s/%s.%s' % (self.base_url_prod, uri, resp_format)
         logger.debug(api_url)
-        
+
         #add detail flag to url
         payload = {
             'chainType':  self.o_type[chain_type],
-            'expirationMonth': f'{expiration_month:02}',
+            'expirationMonth': expiration_month,
             'expirationYear': expiration_year,
             'underlier': underlier,
             'skipAdjusted': keep_skip_adjusted
