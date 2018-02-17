@@ -19,9 +19,10 @@ logger = logging.getLogger(__name__)
 #helper class for enumberated type ETradeOptionType
 @unique
 class ETradeOptionType( Enum ):
-            CALL = 1
-            PUT = 2
-            BOTH = 3
+    CALL = 1
+    PUT = 2
+    BOTH = 3
+    
 
 class ETradeMarket(object):
     '''ETradeMarket'''
